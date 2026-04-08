@@ -433,7 +433,8 @@ ${SHARED_STYLES}
   /* ── hero ── */
   .hero{padding:3rem 0 2rem;text-align:center;}
   .hero h1{font-family:'Geist Mono','JetBrains Mono',monospace;font-size:2.8rem;font-weight:700;color:#fff;letter-spacing:-0.05em;margin-bottom:1rem;line-height:1.1;text-transform:lowercase;}
-  .hero .tagline{font-size:1rem;color:#777;max-width:500px;margin:0 auto 1.5rem;line-height:1.7;}
+  .hero .tagline{font-size:1rem;color:#777;max-width:760px;margin:0 auto 1rem;line-height:1.7;}
+  .hero .tagline:last-of-type{margin-bottom:1.5rem;}
 
   /* ── ascii art box ── */
   .ascii-box{font-family:'Geist Mono','JetBrains Mono',monospace;font-size:0.72rem;line-height:1.35;color:#ccc;text-align:center;margin:0 auto 1.5rem;white-space:pre;user-select:none;letter-spacing:0.02em;}
@@ -524,7 +525,8 @@ ${renderNav()}
  │                                              │
  └──────────────────────────────────────────────┘</div>
     <h1>one key. every api.<br>zero friction.</h1>
-    <p class="tagline">procurement labs is an <strong>mcp gateway that removes the api layer from your workflow entirely</strong>. you never register for a provider, never touch a raw key, never write rate-limit logic. we maintain the provider credentials — your agent queries us through mcp, and we handle auth, retries, fallbacks, and usage tracking for every call behind the scenes. the one key you install unlocks all of them at once.</p>
+    <p class="tagline">procurement labs is an <strong>mcp gateway that removes the api layer from your workflow entirely</strong>. you never register for a provider, never touch a raw key, never write rate-limit logic.</p>
+    <p class="tagline">we maintain the provider credentials — your agent queries us through mcp, and we handle auth, retries, fallbacks, and usage tracking behind the scenes. the one key you install unlocks all of them at once.</p>
   </div>
 
   <div class="waitlist-hero">
