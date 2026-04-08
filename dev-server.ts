@@ -524,7 +524,7 @@ ${renderNav()}
  │                                              │
  └──────────────────────────────────────────────┘</div>
     <h1>one key. every api.<br>zero friction.</h1>
-    <p class="tagline">stop integrating apis. we already signed up for weather, finance, health, maps, and more — your ai agent just asks for data, we fetch it. no provider accounts, no .env files, no credentials on your machine.</p>
+    <p class="tagline">procurement labs is an <strong>mcp gateway that removes the api layer from your workflow entirely</strong>. you never register for a provider, never touch a raw key, never write rate-limit logic. we maintain the provider credentials — your agent queries us through mcp, and we handle auth, retries, fallbacks, and usage tracking for every call behind the scenes. the one key you install unlocks all of them at once.</p>
   </div>
 
   <div class="waitlist-hero">
@@ -541,7 +541,7 @@ ${renderNav()}
   </div>
 
   <div class="pitch">
-    procurement labs is an <strong>mcp gateway that removes the api layer from your workflow entirely</strong>. you never register for a provider, never touch a raw key, never write rate-limit logic. we maintain credentials for ${total} providers — your agent queries us through mcp, and we handle auth, retries, fallbacks, and usage tracking for every call behind the scenes. the one key you install unlocks all of them at once.
+    stop integrating apis. we already signed up for weather, finance, health, maps, and more — your ai agent just asks for data, we fetch it. no provider accounts, no .env files, no credentials on your machine.
   </div>
 
   <div class="stats-row">
