@@ -467,10 +467,33 @@ ${SHARED_STYLES}
   .stats-row .sl{font-size:0.7rem;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-top:0.35rem;font-weight:600;}
 
   /* ── categories (plain text) ── */
-  .categories{margin-bottom:4rem;text-align:center;}
+  .categories{margin-bottom:3rem;text-align:center;}
   .categories h2{font-family:'Geist Mono','JetBrains Mono',monospace;font-size:0.75rem;text-transform:lowercase;letter-spacing:0.08em;color:#555;margin-bottom:1rem;font-weight:500;}
-  .cat-tags{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;max-width:600px;margin:0 auto;}
+  .cat-tags{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;max-width:640px;margin:0 auto;}
   .cat-tag{font-family:'Geist Mono','JetBrains Mono',monospace;font-size:0.75rem;color:#888;padding:0.35rem 0.75rem;border:1px solid rgba(255,255,255,0.08);border-radius:0.25rem;background:transparent;}
+  .cat-tag-more{color:#5a5a5a;border-style:dashed;border-color:rgba(255,255,255,0.14);}
+  .cat-tag-more::before{content:'+ ';color:#6aace8;}
+
+  /* ── demo animation ── */
+  .demo-wrap{margin-bottom:4rem;}
+  .demo-wrap h2{text-align:center;font-family:'Geist Mono','JetBrains Mono',monospace;font-size:0.75rem;text-transform:lowercase;letter-spacing:0.08em;color:#555;margin-bottom:1rem;font-weight:500;}
+  .demo-sub{text-align:center;font-size:0.82rem;color:#666;margin-bottom:1.25rem;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6;}
+  .demo-term{max-width:760px;margin:0 auto;background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;overflow:hidden;font-family:'Geist Mono','JetBrains Mono',monospace;box-shadow:0 0 40px rgba(0,0,0,0.4);}
+  .demo-head{padding:0.55rem 1rem;background:rgba(255,255,255,0.03);font-size:0.7rem;color:#555;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:0.5rem;}
+  .demo-head .dots{display:flex;gap:0.35rem;}
+  .demo-head .dot{width:10px;height:10px;border-radius:50%;background:#2a2a2a;}
+  .demo-body{padding:1.25rem 1.5rem;font-size:0.78rem;line-height:1.65;min-height:320px;}
+  .d-line{opacity:0;transform:translateY(3px);transition:opacity 0.35s ease,transform 0.35s ease;white-space:pre;font-family:inherit;}
+  .d-line.visible{opacity:1;transform:translateY(0);}
+  .d-in{color:#e5e5e5;}
+  .d-sys{color:#6aace8;}
+  .d-box{color:#777;}
+  .d-ok{color:#7fbf7f;}
+  .d-done{color:#e8c36a;margin-top:0.5rem;font-weight:600;}
+  .d-dim{color:#555;}
+  @media(max-width:640px){
+    .demo-body{font-size:0.65rem;padding:1rem;min-height:280px;}
+  }
 
   /* ── terminal ── */
   .terminal{background:#0a0a0a;border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:1.5rem 2rem;max-width:640px;margin:0 auto 4rem;font-family:'Geist Mono','JetBrains Mono',monospace;font-size:0.8rem;line-height:1.6;}
@@ -555,7 +578,19 @@ ${renderNav()}
 
   <div class="categories">
     <h2>available categories</h2>
-    <div class="cat-tags">${categoryList}</div>
+    <div class="cat-tags">${categoryList}<span class="cat-tag cat-tag-more">more coming</span></div>
+  </div>
+
+  <div class="demo-wrap">
+    <h2>how it looks in your terminal</h2>
+    <p class="demo-sub">one prompt. your agent hits multiple apis through us. you never see a key.</p>
+    <div class="demo-term">
+      <div class="demo-head">
+        <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <span>~ claude code</span>
+      </div>
+      <div class="demo-body" id="demo-body"></div>
+    </div>
   </div>
 
   <div class="terminal">
@@ -699,6 +734,55 @@ ${renderNav()}
     }
 
     tick();
+  })();
+
+  // ── demo terminal animation ──
+  (function() {
+    var el = document.getElementById('demo-body');
+    if (!el) return;
+
+    var seq = [
+      {cls:'d-in',   text:'$ claude "build a market pulse dashboard with btc price, nyc weather, and any recent fda drug recalls"', wait: 1400},
+      {cls:'d-dim',  text:'', wait: 200},
+      {cls:'d-sys',  text:'→ routing through procurement labs (mcp)...', wait: 550},
+      {cls:'d-box',  text:'  ┌─ pl gateway ──────────────────────┐', wait: 280},
+      {cls:'d-box',  text:'  │  fetching coingecko      → 200 ok │', wait: 380},
+      {cls:'d-box',  text:'  │  fetching openweather    → 200 ok │', wait: 340},
+      {cls:'d-box',  text:'  │  fetching openfda        → 200 ok │', wait: 380},
+      {cls:'d-box',  text:'  └───────────────────────────────────┘', wait: 420},
+      {cls:'d-sys',  text:'← 3 providers. 0 credentials managed by you.', wait: 850},
+      {cls:'d-ok',   text:'✓ writing Dashboard.tsx', wait: 220},
+      {cls:'d-ok',   text:'✓ writing BitcoinCard.tsx', wait: 220},
+      {cls:'d-ok',   text:'✓ writing WeatherCard.tsx', wait: 220},
+      {cls:'d-ok',   text:'✓ writing RecallAlert.tsx', wait: 320},
+      {cls:'d-done', text:'→ done. your agent just built an app using 3 apis it never saw.', wait: 3400},
+    ];
+
+    var idx = 0;
+    function step() {
+      if (idx >= seq.length) {
+        // fade out and restart
+        var kids = el.children;
+        for (var i = 0; i < kids.length; i++) kids[i].classList.remove('visible');
+        setTimeout(function() {
+          while (el.firstChild) el.removeChild(el.firstChild);
+          idx = 0;
+          step();
+        }, 600);
+        return;
+      }
+      var line = seq[idx];
+      var div = document.createElement('div');
+      div.className = 'd-line ' + line.cls;
+      div.textContent = line.text || '\\u00a0';
+      el.appendChild(div);
+      // force reflow so transition runs
+      void div.offsetWidth;
+      div.classList.add('visible');
+      idx++;
+      setTimeout(step, line.wait);
+    }
+    step();
   })();
 
   // ── waitlist form handler ──
